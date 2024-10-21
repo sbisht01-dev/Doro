@@ -1,4 +1,3 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/cwsfjfqf/
-    - /bin/cp -R images $DEPLOYPATH
