@@ -1,4 +1,6 @@
 function Navbar() {
+
+    console.log("Git working")
     return (
         <>
             <div className="navbar">
@@ -11,6 +13,7 @@ function Navbar() {
                 <div className="user"><img src="src/assets/user.png" alt="" /></div>
             </div>
         </>
+
     )
 }
 
