@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function Navbar() {
 
     console.log("Git working")
@@ -10,7 +12,11 @@ function Navbar() {
                     <a href=""><div>Spotify</div></a>
                     <a href=""><div>Sessions</div></a>
                 </div>
-                <div className="user"><img src="src/assets/user.png" alt="" /></div>
+                <Link to={"login"} >
+                    <div className="user">
+                        <img src="src/assets/user.png" alt="" />
+                    </div>
+                </Link>
             </div>
         </>
 

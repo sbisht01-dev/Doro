@@ -10,8 +10,7 @@ function Home() {
                     <div className="main">
                         <div className="text">Start tracking your time today and see
                             the difference</div>
-
-                        <div className='start'>START NOW</div>
+                        <div className='start'>START NOW </div>
                     </div>
                 </div>
             </div>
