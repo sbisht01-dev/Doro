@@ -1,22 +1,45 @@
-import { Link } from 'react-router-dom'
 
-function Navbar() {
+import { useEffect, useState } from 'react'
+import app from '../../firebase'
+import { onAuthStateChanged, getAuth } from 'firebase/auth/web-extension'
+import { useNavigate } from 'react-router-dom'
 
-    console.log("Git working")
+function Navbar(photoURL) {
+    console.log(photoURL.photoURL)
+    const auth = getAuth(app);
+    const navigate = useNavigate()
+    const [user, setUser] = useState(false);
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // setPhotoURL(user.photoURL)
+                setUser(true);
+            } else {
+                navigate("/");
+            }
+        })
+        return () => unsubscribe();
+    })
     return (
         <>
             <div className="navbar">
                 <div className="logo">DORO</div>
                 <div className="nav">
-                    <a href=""><div>Home</div></a>
-                    <a href=""><div>Spotify</div></a>
+                    <a href="/ "><div>Home</div></a>
+                    <a href="/songs"><div>Spotify</div></a>
                     <a href=""><div>Sessions</div></a>
                 </div>
-                <Link to={"login"} >
-                    <div className="user">
-                        <img src="src/assets/user.png" alt="" />
-                    </div>
-                </Link>
+                ({user ?
+                    (<a href="/login" >
+                        <div className="user">
+                            <img src={photoURL.photoURL} />
+                        </div>
+                    </a>) : (<a href="/login" >
+                        <div className="user">
+                            <img src="src/assets/user.png" />
+                        </div>
+                    </a>)
+                })
             </div>
         </>
 
