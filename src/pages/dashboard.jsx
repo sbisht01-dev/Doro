@@ -1,7 +1,7 @@
 // import { signOut, getAuth } from "firebase/auth";
 import { useState, useEffect } from "react"
 
-import app from "../../firebase";
+// import app from "../../firebase";
 // import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 function Dashboard() {
