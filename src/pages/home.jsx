@@ -1,15 +1,8 @@
 import Navbar from '../components/Navbar'
 import '../css/home.css'
 import { Link } from 'react-router-dom'
-import { useState,useEffect } from 'react';
 function Home() {
-    const [apiKey, setApiKey] = useState('');
-
-    useEffect(() => {
-      const apiKeyFromEnv = import.meta.env.VITE_FIREBASE_API_KEY;
-      setApiKey(apiKeyFromEnv);
-    }, []);
-    console.log(apiKey)
+   
   
     return (
         <>
