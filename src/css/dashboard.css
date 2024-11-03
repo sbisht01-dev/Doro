@@ -1,0 +1,35 @@
+.timer-container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+justify-content: space-around;
+}
+
+#timer {
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 100px;
+    text-align: center;
+    width: 400px;
+    height: 150px;
+    border: none;
+    border-radius: 20px;
+    background-color: rgb(29, 29, 29);
+}
+
+
+#tag-input{
+    height: 40px;
+    border: none;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+#submit{
+    height: 40px;
+    padding: 8px 24px;
+    border-radius: 12px;
+    box-sizing: border-box;
+}

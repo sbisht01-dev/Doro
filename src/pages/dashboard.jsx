@@ -1,39 +1,39 @@
-// import { signOut, getAuth } from "firebase/auth";
 import { useState, useEffect } from "react"
-// import { inject } from '@vercel/analytics';
-
-// import app from "../../firebase";
-// import { useNavigate } from "react-router-dom";
+import app from "../../firebase";
+import { onAuthStateChanged } from 'firebase/auth/web-extension'
 import Navbar from "../components/Navbar";
+import Tag from "../components/Tag";
+import '../css/dashboard.css'
+import { getAuth } from "firebase/auth";
 function Dashboard() {
-    // const auth = getAuth(app)
+    const auth = getAuth(app)
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            window.localStorage.setItem("uid", user.uid)
+        })
+        return () => unsubscribe();
+    }, [auth])
 
-    // inject();
     const [userInput, setUserInput] = useState(10)
-    // setUserInput(10)
+
     const minutes = userInput * 60 * 1000
     const duration = minutes
     // const navigate = useNavigate();
-    const [time, setTime] = useState(duration)
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            if (time > 0) {
-                setTime(time - 1000);
-            } else {
-                clearInterval(intervalId); // Clear the interval when time reaches 0
-            }
-        }, 1000);
-        return () => clearInterval(intervalId);
-    }, [time]);
+    function useTimer(initialTime) {
+        const [time, setTime] = useState(initialTime);
 
-    // const handleSignOut = () => {
-    //     signOut(auth).then(() => {
-    //         console.log("Signout")
-    //         navigate("/")
-    //     }).catch((error) => {
-    //         console.log(error)
-    //     })
-    // }
+        useEffect(() => {
+            const intervalId = setInterval(() => {
+                setTime((prevTime) => (prevTime > 0 ? prevTime - 1000 : 0));
+            }, 1000);
+
+            return () => clearInterval(intervalId);
+        }, []);
+
+        return time;
+    }
+
+    const time = useTimer(duration);
 
     function formattedTime(time) {
         let total_sec = parseInt(Math.floor(time / 1000))
@@ -50,34 +50,24 @@ function Dashboard() {
             seconds = `0` + `${seconds}`
         }
 
-        let min = parseInt(total_min % 60)
         let hour = parseInt(total_hour % 24)
         if (total_sec <= 0) {
             return '00:00:00'
         }
-        // console.log(total_sec)
+
         return `${hour}: ${minutes}: ${seconds}`
-
     }
-
-
 
     return (
         <>
             <Navbar />
-            <div id="timer" >
-                <input type="text" name="timer" id="timer" placeholder={formattedTime(time)} />
+            <div className="timer-container">
+                <div id="timer" >
+                    <input type="text" name="timer" id="timer" placeholder={formattedTime(time)} />
+                </div>
+                <Tag />
+
             </div>
-            {/* <input
-                onChange={(e) => { setUserInput(e.target.value) }}
-                value={userInput}
-                type="number"
-            /> */}
-
-            {/* <button style={{ backgroundColor: "white", padding: 12, borderRadius: 12 }} onClick={startTimer}>Start</button> */}
-
-
-
         </>
     )
 }

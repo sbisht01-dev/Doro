@@ -17,7 +17,7 @@ function Navbar() {
                 setPhoto(user.photoURL)
                 setUser(true);
                 setName(user.displayName)
-                console.log(user)
+                // console.log(user)
             } else {
                 navigate("/");
             }
