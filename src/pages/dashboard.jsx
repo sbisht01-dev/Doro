@@ -1,11 +1,14 @@
 // import { signOut, getAuth } from "firebase/auth";
 import { useState, useEffect } from "react"
-import { Analytics } from "@vercel/analytics/react"
+import { inject } from '@vercel/analytics';
+ 
 // import app from "../../firebase";
 // import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 function Dashboard() {
     // const auth = getAuth(app)
+
+inject();
     const [userInput, setUserInput] = useState(10)
     const minutes = userInput * 60 * 1000
     const duration = minutes
