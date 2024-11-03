@@ -1,14 +1,14 @@
 // import { signOut, getAuth } from "firebase/auth";
 import { useState, useEffect } from "react"
-import { inject } from '@vercel/analytics';
- 
+// import { inject } from '@vercel/analytics';
+
 // import app from "../../firebase";
 // import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 function Dashboard() {
     // const auth = getAuth(app)
 
-inject();
+    // inject();
     const [userInput, setUserInput] = useState(10)
     // setUserInput(10)
     const minutes = userInput * 60 * 1000
@@ -42,12 +42,12 @@ inject();
         let seconds = parseInt(total_sec % 60)
         let minutes = parseInt(total_min) % 60
 
-        if (minutes < 10 & minutes >=0) {
-            minutes = `0`+`${minutes}`
+        if (minutes < 10 & minutes >= 0) {
+            minutes = `0` + `${minutes}`
         }
 
-        if (seconds < 10 & seconds >=0) {
-            seconds = `0`+`${seconds}`
+        if (seconds < 10 & seconds >= 0) {
+            seconds = `0` + `${seconds}`
         }
 
         let min = parseInt(total_min % 60)
@@ -59,7 +59,7 @@ inject();
         return `${hour}: ${minutes}: ${seconds}`
 
     }
-   
+
 
 
     return (
@@ -75,7 +75,7 @@ inject();
             /> */}
 
             {/* <button style={{ backgroundColor: "white", padding: 12, borderRadius: 12 }} onClick={startTimer}>Start</button> */}
-            
+
 
 
         </>
