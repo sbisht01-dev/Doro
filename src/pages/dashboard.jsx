@@ -10,6 +10,7 @@ function Dashboard() {
 
 inject();
     const [userInput, setUserInput] = useState(10)
+    // setUserInput(10)
     const minutes = userInput * 60 * 1000
     const duration = minutes
     // const navigate = useNavigate();
