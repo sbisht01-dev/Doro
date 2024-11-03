@@ -4,6 +4,21 @@
     overflow-x: hidden;
 }
 
+#timer {
+    /* font-family: "Rubik Wet Paint" ; */
+    font-family: "Bebas Neue", sans-serif;
+
+    font-weight: 400;
+    font-style: normal;
+    font-size: 100px;
+    text-align: center;
+    width: 400px;
+    border: none;
+    border-radius: 20px;
+    background-color: rgb(28, 28, 28);
+}
+
+
 body {
     background-color: black;
 }
@@ -61,12 +76,9 @@ body {
 .user img {
     height: 32px;
     width: 32px;
-    
-}
-
-.main {
 
 }
+
 
 .base {
     /* background-image: url("src/assets/Frame 76.png"); */

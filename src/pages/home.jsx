@@ -1,34 +1,28 @@
 import Navbar from '../components/Navbar'
 import '../css/home.css'
-import { useEffect, useState } from 'react'
-import app from '../../firebase'
-import { onAuthStateChanged, getAuth } from 'firebase/auth/web-extension'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useState,useEffect } from 'react';
 function Home() {
-    const auth = getAuth(app);
-    const navigate = useNavigate()
-  let [photoURL,setPhotoURL] = useState();
+    const [apiKey, setApiKey] = useState('');
+
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setPhotoURL(user.photoURL)
-                navigate("dashboard")
-            } else {
-                navigate("/");
-            }
-        })
-        return () => unsubscribe();
-    })
+      const apiKeyFromEnv = import.meta.env.VITE_FIREBASE_API_KEY;
+      setApiKey(apiKeyFromEnv);
+    }, []);
+    console.log(apiKey)
+  
     return (
         <>
             <div className="container">
-                <Navbar photoURL={photoURL} />
+                <Navbar />
                 <div className="base">
                     <div className="bottom"></div>
                     <div className="main">
-                        <div className="text">Start tracking your time today and see
-                            the difference</div>
-                        <div className='start'>START NOW </div>
+                        <div className="text">
+                            Start tracking your time today and see the difference</div>
+                        <Link to="dashboard">
+                            <div className='start'>START NOW </div>
+                        </Link>
                     </div>
                 </div>
             </div>

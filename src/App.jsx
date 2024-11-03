@@ -13,7 +13,6 @@ function App() {
           <Route path='login' element={<Login />} />
           <Route path='songs' element={<Songs />} />
           <Route path='dashboard' element={<Dashboard />} />
-
         </Routes>
       </BrowserRouter>
     </>
