@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react'
-import app from '../../firebase'
+import app from '../firebase'
 import { onAuthStateChanged, getAuth } from 'firebase/auth/web-extension'
 import { useNavigate } from 'react-router-dom'
 

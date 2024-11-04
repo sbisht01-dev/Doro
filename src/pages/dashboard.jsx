@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import app from "../../firebase";
+import app from "../firebase";
 import { onAuthStateChanged } from 'firebase/auth/web-extension'
 import Navbar from "../components/Navbar";
 import Tag from "../components/Tag";

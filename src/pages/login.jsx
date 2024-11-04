@@ -1,5 +1,5 @@
 import '../css/login.css'
-import app from '../../firebase'
+import app from '../firebase'
 // import { useState } from 'react'
 import {
     getAuth, GoogleAuthProvider,
