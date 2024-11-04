@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import app from '../firebase'
 import { onAuthStateChanged, getAuth } from 'firebase/auth/web-extension'
 import { useNavigate } from 'react-router-dom'
+import userLogo from '../../public/images/user.png'
 
 function Navbar() {
     const auth = getAuth(app);
@@ -49,7 +50,7 @@ function Navbar() {
                     ) : (
                         <a className='nav-login' href="/login" >
                             <div className="user">
-                                <img src="images/user.png" />
+                                <img src={userLogo} />
                             </div>
                             {/* <p style={{ color: "white" }}>Login</p> */}
 
