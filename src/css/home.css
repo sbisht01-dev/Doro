@@ -16,7 +16,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100vw;
+    width: 100%;
 }
 
 .logo {
@@ -53,17 +53,27 @@ body {
 
 }
 
-.user {
+.nav-login{
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    text-decoration: none;
     display: flex;
-    width: 200px;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 200px;
+}
+
+.user {
+   
     cursor: pointer;
 }
 
 .user img {
-    height: 32px;
-    width: 32px;
+    height: 48px;
+    width: 48px;
+    border-radius: 20px;
 
 }
 

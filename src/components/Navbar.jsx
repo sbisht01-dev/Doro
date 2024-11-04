@@ -38,18 +38,24 @@ function Navbar() {
                     <a href="/songs"><div>Spotify</div></a>
                     <a href=""><div>Sessions</div></a>
                 </div>
-                ({user ?
-                    (<a href="/login" >
-                        <div className="user">
-                            <img src={photo} />
-                        </div>
-                        <p style={{ color: "white", textDecoration: "none" }}>{name}</p>
-                    </a>) : (<a href="/login" >
-                        <div className="user">
-                            <img src="src/assets/user.png" />
-                        </div>
-                    </a>)
-                })
+                {user ?
+                    (
+                        <a className='nav-login' href="/login" >
+                            <div className="user">
+                                <img src={photo} />
+                            </div>
+                            {/* <p style={{ color: "white" }}>{name}</p> */}
+                        </a>
+                    ) : (
+                        <a className='nav-login' href="/login" >
+                            <div className="user">
+                                <img src="src/assets/user.png" />
+                            </div>
+                            {/* <p style={{ color: "white" }}>Login</p> */}
+
+                        </a>
+                    )
+                }
             </div>
         </>
 
