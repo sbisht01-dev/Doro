@@ -2,12 +2,14 @@ import { getDatabase, ref, onValue, set } from "firebase/database"
 import app from "../firebase"
 import { memo } from "react";
 import { useEffect, useState } from "react"
+import PropTypes from "prop-types";
 
-function Tag() {
+function Tag(props) {
     const database = getDatabase(app);
     const [tag, setTag] = useState("");
+    const timer = props.timerActive
+    console.log(timer)
     let userID = window.localStorage.getItem("uid")
-    // console.log(userID)
     function genTagColor() {
         const hue = Math.floor(Math.random() * 365);
         const color = `hsl(${hue}, 40%, 85%)`;
@@ -39,8 +41,7 @@ function Tag() {
                 });
             }
         });
-    }, [database]);
-    console.log(ntag)
+    }, [database,userID]);
 
     const submitTag = () => {
         const color = genTagColor();
@@ -86,8 +87,10 @@ function Tag() {
                     id="tag-input"
                     type="text"
                     name="tag"
+                    
                     value={tag}
                     onChange={(e) => setTag(e.target.value)} />
+                    
                 <button id="submit" onClick={submitTag}>Add</button>
             </div>
 
@@ -97,6 +100,10 @@ function Tag() {
             </div>
         </>
     )
+}
+
+Tag.propTypes = {
+    timerActive: PropTypes.bool.isRequired
 }
 
 export default memo(Tag)
