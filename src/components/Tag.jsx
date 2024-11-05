@@ -1,4 +1,4 @@
-import { getDatabase, ref, onValue, push } from "firebase/database"
+import { getDatabase, ref, onValue, set } from "firebase/database"
 import app from "../firebase"
 import { memo } from "react";
 import { useEffect, useState } from "react"
@@ -35,21 +35,22 @@ function Tag() {
                     } else {
                         console.log("Element already exist");
                     }
+                    getAllTagColors()
                 });
             }
         });
-    }, [database, userID]);
-console.log(ntag)
+    }, [database]);
+    console.log(ntag)
 
     const submitTag = () => {
         const color = genTagColor();
-        const dbRef = ref(database, `/Doro/${userID}/tags/`)
+        const dbRef = ref(database, `/Doro/${userID}/tags/${tag}`)
         const tagData = {
             tagName: tag,
             tagColor: color
         }
-        if (tag && ntag<5) {
-            push(dbRef, tagData)
+        if (tag && ntag < 5) {
+            set(dbRef, tagData)
                 .then(() => {
                     console.log("Tag added");
                     setTag("");
@@ -62,6 +63,20 @@ console.log(ntag)
         }
     }
 
+    function getAllTagColors() {
+        const tagList = document.getElementById("available-tag");
+        const tagDivs = tagList.querySelectorAll("div");
+        const colors = [];
+
+        tagDivs.forEach(div => {
+            const color = window.getComputedStyle(div).backgroundColor
+            div.addEventListener("click", function () {
+                document.body.style.backgroundColor = color
+            })
+        });
+
+        return colors;
+    }
 
 
     return (
@@ -76,6 +91,7 @@ console.log(ntag)
                 <button id="submit" onClick={submitTag}>Add</button>
             </div>
 
+            {/* tags are dynamically added and called from  database */}
             <div className="tag-list" id="available-tag">
 
             </div>

@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Tag from "../components/Tag";
 import '../css/dashboard.css'
 import { getAuth } from "firebase/auth";
+import { FunctionDeclarationSchemaType } from "firebase/vertexai-preview";
 function Dashboard() {
     const auth = getAuth(app)
     useEffect(() => {
@@ -57,6 +58,8 @@ function Dashboard() {
 
         return `${hour}: ${minutes}: ${seconds}`
     }
+
+  
 
     
 
