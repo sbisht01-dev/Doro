@@ -1,8 +1,9 @@
-.timer-container{
+
+.timer-container {
     width: 100vw;
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
-justify-content: space-around;
+    justify-content: space-around;
 }
 
 #timer {
@@ -19,7 +20,7 @@ justify-content: space-around;
 }
 
 
-#tag-input{
+#tag-input {
     height: 40px;
     border: none;
     box-sizing: border-box;
@@ -27,9 +28,37 @@ justify-content: space-around;
     font-size: 16px;
 }
 
-#submit{
+#submit {
     height: 40px;
     padding: 8px 24px;
     border-radius: 12px;
     box-sizing: border-box;
+}
+
+
+
+.tag-list {
+    height: auto;
+    width: auto;
+    max-width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    /* grid-template-columns: repeat(3, 1fr); */
+    gap: 12px;
+    overflow-y: hidden;
+}
+
+.tag-list div {
+    color: rgb(18, 18, 18);
+    height: 32px;
+    min-width: 60px;
+    width: auto;
+    padding: 2px 4px;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    background-color: rebeccapurple;
+    font-family: "Bebas Neue", sans-serif;
 }

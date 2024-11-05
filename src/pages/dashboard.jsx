@@ -58,6 +58,8 @@ function Dashboard() {
         return `${hour}: ${minutes}: ${seconds}`
     }
 
+    
+
     return (
         <>
             <Navbar />
