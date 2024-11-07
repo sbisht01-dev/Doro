@@ -8,74 +8,70 @@ import { getAuth } from "firebase/auth";
 
 function Dashboard() {
     const auth = getAuth(app)
-    const [userInput, setUserInput] = useState(0);
+    const [userInput, setUserInput] = useState(10);
     const [isTimerActive, setIsTimerActive] = useState(false);
-    const minutes = userInput * 60 * 1000;
-    const duration = minutes;
-    const time = useTimer(duration, isTimerActive, userInput);
+    const [time, setTime] = useState(userInput * 60 * 1000);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            window.localStorage.setItem("uid", user.uid)
-        })
+            window.localStorage.setItem("uid", user.uid);
+        });
         return () => unsubscribe();
-    }, [auth])
+    }, [auth]);
 
-    function useTimer(initialTime, isActive, userInput) {
-        const [time, setTime] = useState(initialTime);
-        console.log(time)
-        useEffect(() => {
-            if (isActive) {
-                const intervalId = setInterval(() => {
-                    setTime((prevTime) => (prevTime > 0 ? prevTime - 1000 : 0));
-                }, 1000);
+    useEffect(() => {
+        let intervalId;
+        if (isTimerActive && time > 0) {
+            intervalId = setInterval(() => {
+                setTime((prevTime) => (prevTime > 0 ? prevTime - 1000 : 0));
+            }, 1000);
+        } else if (time === 0) {
+            setIsTimerActive(false); // Stop the timer when it reaches zero
+        }
 
-                return () => clearInterval(intervalId);
-            }
-        }, [isActive, initialTime, userInput]);
-        return time;
-    }
+        return () => clearInterval(intervalId);
+    }, [isTimerActive, time]);
 
     const handleStartTimer = () => {
         setIsTimerActive(true);
     };
 
     const handleDurationChange = (event) => {
-        setUserInput(parseInt(event.target.value));
+        const newDuration = parseInt(event.target.value);
+        setUserInput(newDuration);
+        setTime(newDuration * 60 * 1000); // Update the timer with the new duration
+        setIsTimerActive(false); // Reset timer state
     };
 
-    const formattedTime = (time) => {
-        let total_sec = parseInt(Math.floor(time / 1000));
-        let total_min = parseInt(Math.floor(total_sec / 60));
-        let total_hour = parseInt(Math.floor(total_min / 60));
-        let seconds = parseInt(total_sec % 60);
-        let minutes = parseInt(total_min) % 60;
+    const formattedTime = () => {
+        let total_sec = Math.floor(time / 1000);
+        let hours = Math.floor(total_sec / 3600);
+        let minutes = Math.floor((total_sec % 3600) / 60);
+        let seconds = total_sec % 60;
 
-        if (minutes < 10 && minutes >= 0) {
-            minutes = `0` + `${minutes}`;
-        }
-
-        if (seconds < 10 && seconds >= 0) {
-            seconds = `0` + `${seconds}`;
-        }
-
-        let hour = parseInt(total_hour % 24);
-        if (total_sec <= 0) {
-            return '00:00:00';
-        }
-
-        return `${hour}: ${minutes}: ${seconds}`;
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
+
+   
+    //updating the tag with new time durations 
+    useEffect(() => {
+        if (isTimerActive) {
+            setInterval(() => {
+                console.log("activate");
+            }, 5000);
+        } else {
+            console.log("Not Active");
+        }
+    }, [isTimerActive]);
 
     return (
         <>
             <Navbar />
             <Tag timerActive={isTimerActive} />
             <div className="timer-container">
-                <div id="timer">
-                    <input readOnly type="text" name="timer" id="timer" placeholder={formattedTime(time)} />
-                </div>
+                <div id="timer" style={{ color: "white" }}>{formattedTime()}</div>
                 <select name="duration" id="timer-duration" onChange={handleDurationChange}>
+                    <option value="">--Choose--</option>
                     <option value="10">10</option>
                     <option value="30">30</option>
                     <option value="60">60</option>

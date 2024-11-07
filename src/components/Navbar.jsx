@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react'
 import app from '../firebase'
 import { onAuthStateChanged, getAuth } from 'firebase/auth/web-extension'
 import { useNavigate } from 'react-router-dom'
-import userLogo from '../../public/images/user.png'
+// import userLogo from 'src/assets/images/user.png'
 
 function Navbar() {
     const auth = getAuth(app);
     const navigate = useNavigate()
     const [user, setUser] = useState(false);
     const [photo, setPhoto] = useState();
+    // console.log(photo)
     const [name, setName] = useState();
 
     useEffect(() => {
@@ -27,7 +28,7 @@ function Navbar() {
     })
 
     useEffect(() => {
-        console.log(name)
+        // console.log(name)
     }, [name])
 
     return (
@@ -43,14 +44,16 @@ function Navbar() {
                     (
                         <a className='nav-login' href="/login" >
                             <div className="user">
-                                <img src={photo} />
+                                {/* <img src={photo} /> */}
+                                <img src="src/assets/images/user.png" />
+
                             </div>
                             {/* <p style={{ color: "white" }}>{name}</p> */}
                         </a>
                     ) : (
                         <a className='nav-login' href="/login" >
                             <div className="user">
-                                <img src={userLogo} />
+                                <img src="src/assets/images/user.png" />
                             </div>
                             {/* <p style={{ color: "white" }}>Login</p> */}
 

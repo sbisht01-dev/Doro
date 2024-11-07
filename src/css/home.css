@@ -66,14 +66,17 @@ body {
 }
 
 .user {
-   
+   display: flex;
+   justify-content: center;
+   align-items: center;
     cursor: pointer;
 }
 
 .user img {
-    height: 48px;
+    height: auto;
     width: 48px;
-    border-radius: 20px;
+    aspect-ratio: 1/1;
+    border-radius: 200px;
 
 }
 

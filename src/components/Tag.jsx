@@ -8,7 +8,7 @@ function Tag(props) {
     const database = getDatabase(app);
     const [tag, setTag] = useState("");
     const timer = props.timerActive
-    console.log(timer)
+    // console.log(timer)
     let userID = window.localStorage.getItem("uid")
     function genTagColor() {
         const hue = Math.floor(Math.random() * 365);
