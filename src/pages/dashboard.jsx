@@ -6,76 +6,94 @@ import Tag from "../components/Tag";
 import '../css/dashboard.css'
 import { getAuth } from "firebase/auth";
 
+// Main Dashboard component for timer functionality and tag management
 function Dashboard() {
+    // Initialize Firebase authentication
     const auth = getAuth(app)
-    const [userInput, setUserInput] = useState(10);
-    const [isTimerActive, setIsTimerActive] = useState(false);
-    const [time, setTime] = useState(userInput * 60 * 1000);
-    const [tagID, setActiveTag] = useState("")
+    
+    // State management using hooks
+    const [userInput, setUserInput] = useState(10);           // Store user's selected duration in minutes
+    const [isTimerActive, setIsTimerActive] = useState(false); // Track if timer is running
+    const [time, setTime] = useState(userInput * 60 * 1000);  // Convert minutes to milliseconds
+    const [tagID, setActiveTag] = useState("")                // Store active tag ID
+
+    // Effect to handle user authentication state
     useEffect(() => {
+        // Subscribe to auth state changes
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             window.localStorage.setItem("uid", user.uid);
         });
+        // Cleanup subscription on component unmount
         return () => unsubscribe();
     }, [auth]);
 
+    // Effect to handle timer countdown
     useEffect(() => {
         let intervalId;
+        // Only run timer if it's active and time remaining
         if (isTimerActive && time > 0) {
             intervalId = setInterval(() => {
                 setTime((prevTime) => (prevTime > 0 ? prevTime - 1000 : 0));
             }, 1000);
         } else if (time === 0) {
-            setIsTimerActive(false); // Stop the timer when it reaches zero
+            setIsTimerActive(false); // Stop timer when it reaches zero
         }
 
+        // Cleanup interval on component unmount or when timer stops
         return () => clearInterval(intervalId);
     }, [isTimerActive, time]);
 
+    // Handler for starting the timer
     const handleStartTimer = () => {
         setIsTimerActive(true);
     };
 
+    // Handler for duration changes from dropdown
     const handleDurationChange = (event) => {
         const newDuration = parseInt(event.target.value);
         setUserInput(newDuration);
-        setTime(newDuration * 60 * 1000); // Update the timer with the new duration
+        setTime(newDuration * 60 * 1000); // Convert minutes to milliseconds
         setIsTimerActive(false); // Reset timer state
     };
 
+    // Format time from milliseconds to HH:MM:SS
     const formattedTime = () => {
         let total_sec = Math.floor(time / 1000);
         let hours = Math.floor(total_sec / 3600);
         let minutes = Math.floor((total_sec % 3600) / 60);
         let seconds = total_sec % 60;
 
+        // Pad numbers with leading zeros
         return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
 
-
-    //updating the tag with new time durations 
-
+    // Handler for updating active tag value
     const handleActiveTagValue = (value) => {
         setActiveTag(value)
     }
 
+    // Effect to monitor timer and tag activity
     useEffect(() => {
         console.log(tagID)
         if (isTimerActive) {
             setInterval(() => {
-                
+                // TODO: Add functionality to update tag duration
             }, 5000);
         } else {
             console.log("Not Active");
         }
     }, [isTimerActive,tagID]);
 
+    // Render dashboard components
     return (
         <>
             <Navbar />
             <Tag timerActive={isTimerActive} activeTag={handleActiveTagValue} />
             <div className="timer-container">
+                {/* Timer display */}
                 <div id="timer" style={{ color: "white" }}>{formattedTime()}</div>
+                
+                {/* Duration selector dropdown */}
                 <select name="duration" id="timer-duration" onChange={handleDurationChange}>
                     <option value="">--Choose--</option>
                     <option value="10">10</option>
@@ -83,6 +101,8 @@ function Dashboard() {
                     <option value="60">60</option>
                     <option value="90">90</option>
                 </select>
+                
+                {/* Start timer button */}
                 <button id="timer-btn" onClick={handleStartTimer}>Start Timer</button>
             </div>
         </>
