@@ -8,6 +8,8 @@ function Tag(props) {
     const database = getDatabase(app);
     const [tag, setTag] = useState("");
     const timer = props.timerActive
+    const activeTag = props.activeTag;
+    const [activeTagID, setActiveTagID] = useState("");
     // console.log(timer)
     let userID = window.localStorage.getItem("uid")
     function genTagColor() {
@@ -41,14 +43,19 @@ function Tag(props) {
                 });
             }
         });
-    }, [database,userID]);
+    }, [database, userID]);
+
+    useEffect(() => {
+        activeTag(activeTagID)
+    }, [activeTag, activeTagID])
 
     const submitTag = () => {
         const color = genTagColor();
         const dbRef = ref(database, `/Doro/${userID}/tags/${tag}`)
         const tagData = {
             tagName: tag,
-            tagColor: color
+            tagColor: color,
+            tagTotalDuration: 0
         }
         if (tag && ntag < 5) {
             set(dbRef, tagData)
@@ -73,13 +80,11 @@ function Tag(props) {
             const color = window.getComputedStyle(div).backgroundColor
             div.addEventListener("click", function () {
                 document.body.style.backgroundColor = color
+                setActiveTagID(div.id)
             })
         });
-
         return colors;
     }
-
-
     return (
         <>
             <div>
@@ -87,10 +92,10 @@ function Tag(props) {
                     id="tag-input"
                     type="text"
                     name="tag"
-                    
+
                     value={tag}
                     onChange={(e) => setTag(e.target.value)} />
-                    
+
                 <button id="submit" onClick={submitTag}>Add</button>
             </div>
 
@@ -103,7 +108,8 @@ function Tag(props) {
 }
 
 Tag.propTypes = {
-    timerActive: PropTypes.bool.isRequired
+    timerActive: PropTypes.bool.isRequired,
+    activeTag: PropTypes.bool.isRequired
 }
 
 export default memo(Tag)

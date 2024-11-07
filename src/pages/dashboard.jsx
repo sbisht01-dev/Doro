@@ -11,7 +11,7 @@ function Dashboard() {
     const [userInput, setUserInput] = useState(10);
     const [isTimerActive, setIsTimerActive] = useState(false);
     const [time, setTime] = useState(userInput * 60 * 1000);
-
+    const [tagID, setActiveTag] = useState("")
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             window.localStorage.setItem("uid", user.uid);
@@ -52,22 +52,28 @@ function Dashboard() {
         return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
 
-   
+
     //updating the tag with new time durations 
+
+    const handleActiveTagValue = (value) => {
+        setActiveTag(value)
+    }
+
     useEffect(() => {
+        console.log(tagID)
         if (isTimerActive) {
             setInterval(() => {
-                console.log("activate");
+                
             }, 5000);
         } else {
             console.log("Not Active");
         }
-    }, [isTimerActive]);
+    }, [isTimerActive,tagID]);
 
     return (
         <>
             <Navbar />
-            <Tag timerActive={isTimerActive} />
+            <Tag timerActive={isTimerActive} activeTag={handleActiveTagValue} />
             <div className="timer-container">
                 <div id="timer" style={{ color: "white" }}>{formattedTime()}</div>
                 <select name="duration" id="timer-duration" onChange={handleDurationChange}>
