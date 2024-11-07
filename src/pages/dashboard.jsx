@@ -10,12 +10,13 @@ import { getAuth } from "firebase/auth";
 function Dashboard() {
     // Initialize Firebase authentication
     const auth = getAuth(app)
-    
+
     // State management using hooks
     const [userInput, setUserInput] = useState(10);           // Store user's selected duration in minutes
     const [isTimerActive, setIsTimerActive] = useState(false); // Track if timer is running
     const [time, setTime] = useState(userInput * 60 * 1000);  // Convert minutes to milliseconds
-    const [tagID, setActiveTag] = useState("")                // Store active tag ID
+    const [tagID, setActiveTag] = useState("")
+    const [timerbtn, setTimerBtn] = useState("Start")             // Store active tag ID
 
     // Effect to handle user authentication state
     useEffect(() => {
@@ -46,6 +47,14 @@ function Dashboard() {
     // Handler for starting the timer
     const handleStartTimer = () => {
         setIsTimerActive(true);
+        console.log(isTimerActive)
+        if (!isTimerActive) {
+            setTimerBtn("Stop")
+        }
+        if (isTimerActive) {
+            setTimerBtn("Start")
+        }
+        console.log(timerbtn)
     };
 
     // Handler for duration changes from dropdown
@@ -74,7 +83,6 @@ function Dashboard() {
 
     // Effect to monitor timer and tag activity
     useEffect(() => {
-        console.log(tagID)
         if (isTimerActive) {
             setInterval(() => {
                 // TODO: Add functionality to update tag duration
@@ -82,7 +90,7 @@ function Dashboard() {
         } else {
             console.log("Not Active");
         }
-    }, [isTimerActive,tagID]);
+    }, [isTimerActive, tagID]);
 
     // Render dashboard components
     return (
@@ -92,7 +100,7 @@ function Dashboard() {
             <div className="timer-container">
                 {/* Timer display */}
                 <div id="timer" style={{ color: "white" }}>{formattedTime()}</div>
-                
+
                 {/* Duration selector dropdown */}
                 <select name="duration" id="timer-duration" onChange={handleDurationChange}>
                     <option value="">--Choose--</option>
@@ -101,9 +109,9 @@ function Dashboard() {
                     <option value="60">60</option>
                     <option value="90">90</option>
                 </select>
-                
+
                 {/* Start timer button */}
-                <button id="timer-btn" onClick={handleStartTimer}>Start Timer</button>
+                <button id="timer-btn" onClick={handleStartTimer}>{timerbtn}</button>
             </div>
         </>
     );

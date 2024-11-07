@@ -1,25 +1,20 @@
-
 import { useEffect, useState } from 'react'
 import app from '../firebase'
 import { onAuthStateChanged, getAuth } from 'firebase/auth/web-extension'
 import { useNavigate } from 'react-router-dom'
-// import userLogo from 'src/assets/images/user.png'
-
 function Navbar() {
     const auth = getAuth(app);
     const navigate = useNavigate()
-    const [user, setUser] = useState(false);
+    const [user, setUser ] = useState(false);
     const [photo, setPhoto] = useState();
-    // console.log(photo)
     const [name, setName] = useState();
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setPhoto(user.photoURL)
-                setUser(true);
+                setUser (true);
                 setName(user.displayName)
-                // console.log(user)
             } else {
                 navigate("/");
             }
@@ -46,7 +41,6 @@ function Navbar() {
                             <div className="user">
                                 {/* <img src={photo} /> */}
                                 <img src="src/assets/images/user.png" />
-
                             </div>
                             {/* <p style={{ color: "white" }}>{name}</p> */}
                         </a>
@@ -56,13 +50,11 @@ function Navbar() {
                                 <img src="src/assets/images/user.png" />
                             </div>
                             {/* <p style={{ color: "white" }}>Login</p> */}
-
                         </a>
                     )
                 }
             </div>
         </>
-
     )
 }
 
