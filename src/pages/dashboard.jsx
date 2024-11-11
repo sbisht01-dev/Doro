@@ -49,20 +49,26 @@ function Dashboard() {
 
     // Handler for starting the timer
     const handleStartTimer = () => {
-        if (tagID) {
+        if (tagID && time != 0) {
             setIsTimerActive(true);
             if (!isTimerActive) {
                 setTimerBtn("Stop")
-                // console.log("Stop")
             } else if (isTimerActive) {
                 setIsTimerActive(false)
                 setTimerBtn("Start")
-                // console.log("Start")
             }
-        }else{
-            alert("Select a Tag")
+        } else {
+            alert("Select Duration/Tag")
         }
     };
+
+    //empty tag handling 
+
+
+    const handleResetTimer = () => {
+        setTime(0)
+        document.getElementById("reset-btn").style.backgroundColor = "#FC9F5B"
+    }
 
     // Handler for duration changes from dropdown
     const handleDurationChange = (event) => {
@@ -70,6 +76,8 @@ function Dashboard() {
         setUserInput(newDuration);
         setTime(newDuration * 60 * 1000); // Convert minutes to milliseconds
         setIsTimerActive(false); // Reset timer state
+        document.getElementById("reset-btn").style.backgroundColor = "black"
+
     };
 
     // Format time from milliseconds to HH:MM:SS
@@ -110,15 +118,25 @@ function Dashboard() {
     if (tBtn) {
 
         if (timerbtn === "Start") {
-            tBtn.style.backgroundColor = "Green"
+            tBtn.style.backgroundColor = "#4C9F70"
+            tBtn.style.color = "white"
 
         } else if (timerbtn === "Stop") {
-            console.log("Button on Stop")
-            tBtn.style.backgroundColor = "Red"
+            tBtn.style.color = "black"
 
+            tBtn.style.backgroundColor = "#E4CC37"
         }
     }
 
+    try {
+        if (!tagID) {
+            document.body.style.backgroundColor = "black"
+            tBtn.style.backgroundColor = "black"
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
 
 
     // Render dashboard components
@@ -142,7 +160,7 @@ function Dashboard() {
                 {/* Start timer button */}
                 <div className="btn-flexbox">
                     <button className="button-27" id="timer-btn" onClick={handleStartTimer}>{timerbtn}</button>
-                    <button className="button-27" id="reset-btn" onClick={handleStartTimer}>Reset</button>
+                    <button className="button-27" id="reset-btn" onClick={handleResetTimer}>Reset</button>
                 </div>
 
 
