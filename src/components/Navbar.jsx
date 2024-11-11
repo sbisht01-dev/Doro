@@ -47,7 +47,7 @@ function Navbar() {
                     ) : (
                         <a className='nav-login' href="/login" >
                             <div className="user">
-                                <img src="src/assets/images/user.png" />
+                                <p>Login</p>
                             </div>
                             {/* <p style={{ color: "white" }}>Login</p> */}
                         </a>

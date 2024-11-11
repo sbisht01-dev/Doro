@@ -15,8 +15,11 @@ function Dashboard() {
     const [userInput, setUserInput] = useState(10);           // Store user's selected duration in minutes
     const [isTimerActive, setIsTimerActive] = useState(false); // Track if timer is running
     const [time, setTime] = useState(userInput * 60 * 1000);  // Convert minutes to milliseconds
-    const [tagID, setActiveTag] = useState("")
-    const [timerbtn, setTimerBtn] = useState("Start")             // Store active tag ID
+    const [tagID, setActiveTag] = useState()
+    const [timerbtn, setTimerBtn] = useState("Start")
+    // console.log(timerbtn)
+    const [resetbtn, setResetBtn] = useState(false);          // Store active tag ID
+
 
     // Effect to handle user authentication state
     useEffect(() => {
@@ -46,15 +49,19 @@ function Dashboard() {
 
     // Handler for starting the timer
     const handleStartTimer = () => {
-        setIsTimerActive(true);
-        console.log(isTimerActive)
-        if (!isTimerActive) {
-            setTimerBtn("Stop")
+        if (tagID) {
+            setIsTimerActive(true);
+            if (!isTimerActive) {
+                setTimerBtn("Stop")
+                // console.log("Stop")
+            } else if (isTimerActive) {
+                setIsTimerActive(false)
+                setTimerBtn("Start")
+                // console.log("Start")
+            }
+        }else{
+            alert("Select a Tag")
         }
-        if (isTimerActive) {
-            setTimerBtn("Start")
-        }
-        console.log(timerbtn)
     };
 
     // Handler for duration changes from dropdown
@@ -73,7 +80,11 @@ function Dashboard() {
         let seconds = total_sec % 60;
 
         // Pad numbers with leading zeros
+        // if (!isTimerActive) {
+        //     console.log("Timer Stopped")
+        // }
         return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
     };
 
     // Handler for updating active tag value
@@ -91,6 +102,24 @@ function Dashboard() {
             console.log("Not Active");
         }
     }, [isTimerActive, tagID]);
+
+
+
+    //Changing button color based on timer activity
+    let tBtn = document.getElementById("timer-btn")
+    if (tBtn) {
+
+        if (timerbtn === "Start") {
+            tBtn.style.backgroundColor = "Green"
+
+        } else if (timerbtn === "Stop") {
+            console.log("Button on Stop")
+            tBtn.style.backgroundColor = "Red"
+
+        }
+    }
+
+
 
     // Render dashboard components
     return (
@@ -111,7 +140,15 @@ function Dashboard() {
                 </select>
 
                 {/* Start timer button */}
-                <button id="timer-btn" onClick={handleStartTimer}>{timerbtn}</button>
+                <div className="btn-flexbox">
+                    <button className="button-27" id="timer-btn" onClick={handleStartTimer}>{timerbtn}</button>
+                    <button className="button-27" id="reset-btn" onClick={handleStartTimer}>Reset</button>
+                </div>
+
+
+
+
+
             </div>
         </>
     );
